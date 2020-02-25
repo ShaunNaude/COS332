@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
     {
         "name": "(gdb) Launch",
         "type": "cppdbg",
@@ -24,7 +25,7 @@
             "name": "C++ Debug (gdb)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/main",
+            "program": "${workspaceFolder}/bin/Server",
             "preLaunchTask": "Build C++ project",
             "args": [],
             "stopAtEntry": false,
