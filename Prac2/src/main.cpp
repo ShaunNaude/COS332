@@ -78,10 +78,12 @@ int main() {
    string OutputStr;
    
    
+   
  
     while (true)
     {
 
+//=========================================================================================================
         memset(buf, 0, 4096);
 
         send(clientSocket,Prompt.c_str(),sizeof(Prompt.c_str()),0);
@@ -99,19 +101,84 @@ int main() {
             break;
         }
 
+/*
+=========================================================================================================
+    here we add the functions for our server
+    ------------------------------------------
 
-
-
+    1) add everything to vector then write vector to txt on disconnect
+    2) Note all functions must be 3 characters long, cause we only going to test the first 3 bytes of the buf.
+=========================================================================================================
+*/
+    //==============Add appointment to calendar===========================================
         if(string(buf, 0, 3) == "add")
         {
-            string item = string(buf,4,bytesReceived-2);
+            string item = string(buf,4,bytesReceived-6);
             appointments.push_back(item);
-            
+            OutputStr = "|| " + item + " ||" + " >> was added!!!";
+            send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+            item = "";
+            OutputStr = "";
+
+        }    
+    //=====================================================================================
+    //================list current appointments============================================
+        if( string(buf,0,3) == "lst" )
+        {
+            OutputStr = "All Events" + string(buf,bytesReceived-2,bytesReceived) ;
+            send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+            OutputStr = "===========================" + string(buf,bytesReceived-2,bytesReceived);
+            send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+            OutputStr = "";
             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
 
+            for(int i=0 ; i < appointments.size() ; i++ )
+            {                                   
+                OutputStr = OutputStr + appointments[i] + string(buf,bytesReceived-2,bytesReceived) ;
+            }
+
+            send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+            OutputStr = "===========================" + string(buf,bytesReceived-2,bytesReceived);
+            send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+            OutputStr = "";
+
         }
+
+    //=====================================================================================
+
+    //=========================remove item form appointments===============================
+        if( string(buf,0,3) == "rmv" )
+        {
+            bool found = false;
+            string item = string(buf,4,bytesReceived-6);
+            for(int i = 0; i < appointments.size(); i++)
+            {
+                if( appointments[i] == item )
+                {
+                    appointments.erase(appointments.begin() + i);
+                    
+                    OutputStr = "|| " + item + " ||" + " >> was removed!!!";
+                    send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+                    found = true;
+                    
+                }
+            }
+
+                if( found == false)
+                {
+                    OutputStr = "|| " + item + " ||" + " >> Could not be found!!!";
+                    send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+                }
             
- 
+
+        }
+
+
+
+    //=====================================================================================
+
+
+//===============================================================================================================
         cout<<appointments[0]<<endl;
  
         
