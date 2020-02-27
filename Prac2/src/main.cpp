@@ -47,6 +47,10 @@ int main() {
     socklen_t clientSize = sizeof(client);
  
     int clientSocket = accept(Listening, (sockaddr*)&client, &clientSize);
+
+    //==============read appointments to vector============================
+
+    //=====================================================================
  
     char host[NI_MAXHOST];      // Client's remote name
     char service[NI_MAXSERV];   // Service (i.e. port) the client is connect on
@@ -68,12 +72,12 @@ int main() {
     close(Listening);
  
 //===============================================================================================================
-    // DONT Touch any thing above this Point
+    // Above is the code that makes the server work
 //===============================================================================================================
     // While loop: accept and echo message back to client
     char buf[4096];
     vector<string> appointments;
-3
+
    string Prompt = "P\> ";
    string OutputStr;
    string item;
@@ -87,6 +91,7 @@ int main() {
 
 //=========================================================================================================
         memset(buf, 0, 4096);
+        found = false;
 
         send(clientSocket,Prompt.c_str(),sizeof(Prompt.c_str()),0);
         // Wait for client to send data
@@ -100,6 +105,9 @@ int main() {
         if (bytesReceived == 0)
         {
             cout << "Client disconnected " << endl;
+//============== write appointments to txt file===============================================
+
+//============================================================================================
             break;
         }
 
@@ -117,7 +125,7 @@ int main() {
         {
             item = string(buf,4,bytesReceived-6);
             appointments.push_back(item);
-            OutputStr = "|| " + item + " ||" + " >> was added!!!";
+            OutputStr = "|| " + item + " ||" + " >> was added!!!"+string(buf,bytesReceived-2,bytesReceived);
             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
 
             //reset variables
@@ -163,7 +171,7 @@ int main() {
                 {
                     appointments.erase(appointments.begin() + i);
                     
-                    OutputStr = "|| " + item + " ||" + " >> was removed!!!";
+                    OutputStr = "|| " + item + " ||" + " >> was removed!!!"+string(buf,bytesReceived-2,bytesReceived);
                     send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
                     found = true;
                     
@@ -172,7 +180,7 @@ int main() {
 
                 if( found == false)
                 {
-                    OutputStr = "|| " + item + " ||" + " >> Could not be found!!!";
+                    OutputStr = "|| " + item + " ||" + " >> Could not be found!!!"+string(buf,bytesReceived-2,bytesReceived);
                     send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
                 }
         // reset variables
@@ -194,7 +202,7 @@ int main() {
             {
                 if( appointments[i] == item )
                 {
-                    OutputStr = "|| " + item + " ||" + " >> was found!!!";
+                    OutputStr = "|| " + item + " ||" + " >> was found!!!"+string(buf,bytesReceived-2,bytesReceived);
                     send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
                     found = true;
                     
@@ -203,17 +211,49 @@ int main() {
 
             if( found == false)
                 {
-                    OutputStr = "|| " + item + " ||" + " >> Could not be found!!!";
+                    OutputStr = "|| " + item + " ||" + " >> Could not be found!!!"+string(buf,bytesReceived-2,bytesReceived);
                     send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
                 }
 
 
-            
+            //reset variables
+            OutputStr = "";
         }
 
     //=====================================================================================
 
     //=========================Help function================================================
+    //
+         if( string(buf,0,3) == "hlp" ){
+
+             OutputStr = "All functions" + string(buf,bytesReceived-2,bytesReceived) ;
+             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+             OutputStr = "=================================="+string(buf,bytesReceived-2,bytesReceived);
+             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+
+             OutputStr = "1) add 'name of appointment'  << this adds to your appointments"+string(buf,bytesReceived-2,bytesReceived);
+             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+
+             OutputStr = "2) rmv 'name of appointment' << this removes the appointment if it is found"+string(buf,bytesReceived-2,bytesReceived);
+             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+
+             OutputStr = "3) fnd 'name of appointment' << this searches if the appointment is in your database"+string(buf,bytesReceived-2,bytesReceived);
+             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+
+             OutputStr = "4) lst  << this lists all active appointments"+string(buf,bytesReceived-2,bytesReceived);
+             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+
+            //reset variables
+            OutputStr = "";
+
+         }
+
+         if(string(buf,0,3) != "hlp" || string(buf,0,3) != "add" || string(buf,0,3) != "rmv" || string(buf,0,3) != "lst" || string(buf,0,3) != "fnd" )
+            {
+                OutputStr = "Unrecognized Command! Use 'hlp' for Command list " + string(buf,bytesReceived-2,bytesReceived);
+                send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+            }
+
 
     //======================================================================================
 
