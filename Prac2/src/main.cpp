@@ -73,9 +73,11 @@ int main() {
     // While loop: accept and echo message back to client
     char buf[4096];
     vector<string> appointments;
-
+3
    string Prompt = "P\> ";
    string OutputStr;
+   string item;
+   bool found = false;
    
    
    
@@ -113,10 +115,12 @@ int main() {
     //==============Add appointment to calendar===========================================
         if(string(buf, 0, 3) == "add")
         {
-            string item = string(buf,4,bytesReceived-6);
+            item = string(buf,4,bytesReceived-6);
             appointments.push_back(item);
             OutputStr = "|| " + item + " ||" + " >> was added!!!";
             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+
+            //reset variables
             item = "";
             OutputStr = "";
 
@@ -140,6 +144,8 @@ int main() {
             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
             OutputStr = "===========================" + string(buf,bytesReceived-2,bytesReceived);
             send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+
+            //reset variable
             OutputStr = "";
 
         }
@@ -149,7 +155,7 @@ int main() {
     //=========================remove item form appointments===============================
         if( string(buf,0,3) == "rmv" )
         {
-            bool found = false;
+            found = false;
             string item = string(buf,4,bytesReceived-6);
             for(int i = 0; i < appointments.size(); i++)
             {
@@ -169,17 +175,52 @@ int main() {
                     OutputStr = "|| " + item + " ||" + " >> Could not be found!!!";
                     send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
                 }
-            
-
+        // reset variables
+            item = "";
+            OutputStr = "";
+            found = false;
         }
 
 
 
     //=====================================================================================
 
+    //==========================search for an Item ========================================
+        if( string(buf,0,3) == "fnd" )
+        {
+            string item = string(buf,4,bytesReceived-6);
+
+             for(int i = 0; i < appointments.size(); i++)
+            {
+                if( appointments[i] == item )
+                {
+                    OutputStr = "|| " + item + " ||" + " >> was found!!!";
+                    send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+                    found = true;
+                    
+                }
+            }
+
+            if( found == false)
+                {
+                    OutputStr = "|| " + item + " ||" + " >> Could not be found!!!";
+                    send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
+                }
+
+
+            
+        }
+
+    //=====================================================================================
+
+    //=========================Help function================================================
+
+    //======================================================================================
+
+
 
 //===============================================================================================================
-        cout<<appointments[0]<<endl;
+        
  
         
         //this code makes a new line, not optimal but it works
