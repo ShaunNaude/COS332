@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <string>
+#include <fstream>
 #include <bits/stdc++.h> 
 
 using namespace std;
@@ -17,7 +18,7 @@ int main() {
     * for example we can put all the socket info in a socket struct 
     */
 
-
+    vector<string> appointments;
 
     //Create socket
     int Listening = socket(AF_INET,SOCK_STREAM,0);
@@ -48,9 +49,22 @@ int main() {
  
     int clientSocket = accept(Listening, (sockaddr*)&client, &clientSize);
 
-    //==============read appointments to vector============================
+    //==============read appointments from txt file to vector============================
 
-    //=====================================================================
+        string line;
+        ifstream myfile;
+        myfile.open("database.txt");
+        if( myfile.is_open() )
+        {
+            while( getline( myfile , line ) ){
+                
+                appointments.push_back(line) ;
+            }
+        }
+
+        myfile.close();
+
+    //===================================================================================
  
     char host[NI_MAXHOST];      // Client's remote name
     char service[NI_MAXSERV];   // Service (i.e. port) the client is connect on
@@ -76,7 +90,7 @@ int main() {
 //===============================================================================================================
     // While loop: accept and echo message back to client
     char buf[4096];
-    vector<string> appointments;
+    
 
    string Prompt = "P\> ";
    string OutputStr;
@@ -106,6 +120,13 @@ int main() {
         {
             cout << "Client disconnected " << endl;
 //============== write appointments to txt file===============================================
+            ofstream writeFile ("database.txt");
+            for(int i = 0; i<appointments.size(); i++)
+                {
+                    writeFile<<appointments[i]<<endl;
+                }
+
+                writeFile.close();
 
 //============================================================================================
             break;
@@ -248,7 +269,8 @@ int main() {
 
          }
 
-         if(string(buf,0,3) != "hlp" || string(buf,0,3) != "add" || string(buf,0,3) != "rmv" || string(buf,0,3) != "lst" || string(buf,0,3) != "fnd" )
+            string check = string(buf,0,3);
+         if(string(buf,0,3) != "hlp" && string(buf,0,3) != "add" && string(buf,0,3) != "rmv" && string(buf,0,3) != "lst" && string(buf,0,3) != "fnd" )
             {
                 OutputStr = "Unrecognized Command! Use 'hlp' for Command list " + string(buf,bytesReceived-2,bytesReceived);
                 send(clientSocket,OutputStr.c_str(),OutputStr.length(),0);
