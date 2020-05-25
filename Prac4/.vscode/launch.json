@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - webserver",
+            "request": "launch",
+            "mainClass": "webserver",
+            "projectName": "Prac4_874216e3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - JavaHTTPServer",
+            "request": "launch",
+            "mainClass": "Java_Server.JavaHTTPServer",
+            "projectName": "Prac4_874216e3"
+        },
+        {
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "name": "nodemon",
+            "program": "${workspaceFolder}/Nodejs_server/server.js",
+            "request": "launch",
+            "restart": true,
+            "runtimeExecutable": "nodemon",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/Nodejs_server/server.js"
+        }
+    ]
+}
