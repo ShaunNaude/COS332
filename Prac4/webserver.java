@@ -60,6 +60,10 @@ public class webserver extends Thread {
                         int end = line.indexOf("H");
                         request = line.substring(start, end);
                         
+                        if(request.length() > 2)
+                        {
+                            System.out.println("awe");
+                        }
 
 
 
