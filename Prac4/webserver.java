@@ -133,9 +133,27 @@ public class webserver extends Thread {
 
 
                         }
+//============================================================================================================================
+                        //lst case
 
+                        if(task.equals("lst")){
+                            //here i need to list all the items in the database.
+                            String list = "";
+                            for(int i = 0 ; i<arr.size() ; i++)
+                            {
+                                list = list + arr.elementAt(i) + "<br>";
+                            }
+                            
+
+                           reply = "<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>All items<br>============<br>"+list+"</p></body></html>"; 
+
+                        }
+                            
+
+
+                        }
                         
-                    }
+                    
                     else {
                         //display questions, check if continue
                         if (request.indexOf("continue=NO") > -1) {
