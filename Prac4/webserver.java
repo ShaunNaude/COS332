@@ -13,7 +13,8 @@ public class webserver extends Thread {
         }
         
         public static ArrayList<questionObj> questions = new ArrayList<questionObj>();
-        public static String arr[] = new String[25] ;
+        public static Vector arr = new Vector() ;
+        
         
         public static void main(String argv[]) throws Exception
         {
@@ -23,12 +24,12 @@ public class webserver extends Thread {
             
             String sCurrentLine;
             
-            int num=0;
+            
             
             while ((sCurrentLine = fileReader.readLine()) != null) {
                 
-                arr[num] = sCurrentLine;
-                num++;
+                arr.add(sCurrentLine);
+              
             }
             
             
@@ -49,9 +50,11 @@ public class webserver extends Thread {
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));              
                     String line = "";
                     String request = "";
+                    String task = "";
+                    String input = "";
                     
                     //Get request from client
-                    int length = -1;
+                    
                     while ((line = in.readLine()) != null && (line.length() != 0)) {
                         //System.out.println(line);
                         if (line.indexOf("GET") > -1) {
@@ -60,12 +63,19 @@ public class webserver extends Thread {
                         int end = line.indexOf("H");
                         request = line.substring(start, end);
                         
-                        if(request.length() > 2)
+                        //here i get the task and input 
+                        if(request.indexOf("ftask") > -1)
                         {
-                            System.out.println("awe");
+                            //so here i need to get the two input varibales
+                            int taskPos = request.indexOf("=");
+                            int splitPos = request.indexOf("&");
+                            task = request.substring(taskPos+1, splitPos);
+
+                            int inputPos = request.lastIndexOf("=");
+                            input = request.substring(inputPos+1,request.length()-1);
+                            
+
                         }
-
-
 
                         }
                     }
@@ -73,18 +83,45 @@ public class webserver extends Thread {
                     System.out.println(request);
 
                     String reply = "";
-                    if (request.indexOf("answer") > -1){
-                        //check if correct, ask to continue
-                        reply = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>COS 332 Quiz</title></head><body><form method='POST' action='' ><h1>COS 332 Browser quiz</h1>";
+                    if ( task != ""){
 
-                        if (request.indexOf("answer=true") > -1){
-                            reply += "<h1 style='color: green'>Correct</h1>";
+                        //within this block we need to check what task is needed 
+//===========================================================================================================================
+                        //add case
+                        if(task.equals("add")){
+
+                            if(!input.equals("") && !input.equals(" "))
+                            {
+                                //here we do addition to arr
+                                arr.add(input);
+                                reply = "<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Item added!!!</p></body></html>";
+
+                            }
+                            else{
+                                //input is empty , error
+                                reply ="<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Input is not valid, Please try again</p></body></html>";
+                            }
+
+
                         }
-                        else {
-                            reply += "<h1 style='color: red'>Wrong</h1>";
+
+//======================================================================================================================
+                        //rmv case
+                        if(task.equals("rmv"))
+                        {
+                            if(!input.equals("") && !input.equals(" ")){
+                                //here i need to remove from the array
+
+
+                            }
+                            else{
+
+                            }
+
+
                         }
+
                         
-                        reply += "<h2>Would you like to continue</h2><input type='radio' name='continue' value='YES'> YES <br><input type='radio' name='continue' value='NO'> NO <br><input type='submit' value='Submit'></form></body>";
                     }
                     else {
                         //display questions, check if continue
