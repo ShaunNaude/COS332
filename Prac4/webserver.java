@@ -85,17 +85,34 @@ public class webserver extends Thread {
 
                     String reply = "";
                     if ( task != ""){
+                        boolean entered = false;
 
                         //within this block we need to check what task is needed 
 //===========================================================================================================================
                         //add case
                         if(task.equals("add")){
-
+                            entered = true;
                             if(!input.equals("") && !input.equals(" "))
                             {
                                 //here we do addition to arr
                                 arr.add(input);
                                 reply = "<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Item added!!!</p></body></html>";
+
+                                 //here i need to write to textfile.
+                        try (FileWriter f = new FileWriter("database.txt");
+                        BufferedWriter b = new BufferedWriter(f);
+                        PrintWriter p = new PrintWriter(b);) {
+        
+                            for(int i = 0 ; i < arr.size() ;i++)
+                            {
+                                p.println(arr.get(i));
+                            }
+                    
+                  
+        
+                } catch (IOException i) {
+                    i.printStackTrace();
+                }
 
                             }
                             else{
@@ -110,6 +127,7 @@ public class webserver extends Thread {
                         //rmv case
                         if(task.equals("rmv"))
                         {
+                            entered = true;
                             if(!input.equals("") && !input.equals(" ")){
                                 //here i need to remove from the array
                                 if(arr.contains(input))
@@ -119,6 +137,22 @@ public class webserver extends Thread {
                                     arr.remove(index);
                                     //reply that the item has been removed
                                     reply = "<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Item removed!!!</p></body></html>";
+
+                                     //here i need to write to textfile.
+                        try (FileWriter f = new FileWriter("database.txt");
+                        BufferedWriter b = new BufferedWriter(f);
+                        PrintWriter p = new PrintWriter(b);) {
+        
+                            for(int i = 0 ; i < arr.size() ;i++)
+                            {
+                                p.println(arr.get(i));
+                            }
+                    
+                  
+        
+                } catch (IOException i) {
+                    i.printStackTrace();
+                }
                                 }
                                 else{
                                     //input is not in database
@@ -137,6 +171,7 @@ public class webserver extends Thread {
                         //lst case
 
                         if(task.equals("lst")){
+                            entered = true;
                             //here i need to list all the items in the database.
                             String list = "";
                             for(int i = 0 ; i<arr.size() ; i++)
@@ -148,7 +183,38 @@ public class webserver extends Thread {
                            reply = "<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>All items<br>============<br>"+list+"</p></body></html>"; 
 
                         }
-                            
+//================================================================================================================================
+                        //fnd case
+                        if(task.equals("fnd")){
+                            entered = true;
+                            //here i need to determine if a object is in the database
+                            if(!input.equals("") && !input.equals(" ")){
+                                //here i need to remove from the array
+                                if(arr.contains(input))
+                                {
+                                    
+                                    //reply is in the DB
+                                    reply = "<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Item Found!!!</p></body></html>";
+                                }
+                                else{
+                                    //input is not in database
+                                    reply = "<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Item is not in the database</p></body></html>";
+                                }
+
+                            }
+                            else{
+                                //invalid input
+                                reply ="<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Input is not valid, Please try again</p></body></html>";
+                            }
+                        }
+//===================================================================================================================================                            
+
+                        if(entered == false)
+                        {
+                            reply ="<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Task entered does not exist</p></body></html>";
+                        }
+
+
 
 
                         }
@@ -175,6 +241,7 @@ public class webserver extends Thread {
                         out.println("");
                         out.println(reply);
                     }
+                    
                     
                     out.close();
                     socket.close();
