@@ -73,6 +73,7 @@ public class webserver extends Thread {
 
                             int inputPos = request.lastIndexOf("=");
                             input = request.substring(inputPos+1,request.length()-1);
+                            input = input.replaceAll("[+]", " ");
                             
 
                         }
@@ -111,11 +112,23 @@ public class webserver extends Thread {
                         {
                             if(!input.equals("") && !input.equals(" ")){
                                 //here i need to remove from the array
-
+                                if(arr.contains(input))
+                                {
+                                    //do deletion here
+                                    int index = arr.indexOf(input);
+                                    arr.remove(index);
+                                    //reply that the item has been removed
+                                    reply = "<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Item removed!!!</p></body></html>";
+                                }
+                                else{
+                                    //input is not in database
+                                    reply = "<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Item is not in the database</p></body></html>";
+                                }
 
                             }
                             else{
-
+                                //invalid input
+                                reply ="<!DOCTYPE html><html><body><h2>HTML Forms</h2><form action='http://www.localhost:11111/'><label for='l1'>Task:</label><br><input type='text' id='ftask' name='ftask' value=''><br><label for='l2'>Input:</label><br><input type='text' id='finput' name='finput' value=''><br><br><input type='submit' value='Submit'></form><p>Input is not valid, Please try again</p></body></html>";
                             }
 
 
