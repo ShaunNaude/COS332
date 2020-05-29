@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9844a542-6bf1-4bb3-8535-4b0d19f63ae7" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1cXSeu6tkQPoIpAiSp10CB1tAaK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunManager">
+    <configuration name="httpServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="httpServer" />
+      <module name="Prac3java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.httpServer" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9844a542-6bf1-4bb3-8535-4b0d19f63ae7" name="Default Changelist" comment="" />
+      <created>1590673544633</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590673544633</updated>
+      <workItem from="1590673552269" duration="6336000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="555" y="148" width="800" height="671" key="#Project_Structure" timestamp="1590674082355">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="555" y="148" width="800" height="671" key="#Project_Structure/0.0.1920.1080@0.0.1920.1080" timestamp="1590674082355" />
+    <state x="289" y="198" width="374" height="571" key="#com.intellij.ide.util.MemberChooser" timestamp="1590675248618">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="289" y="198" width="374" height="571" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1590675248618" />
+    <state width="1866" height="282" key="GridCell.Tab.0.bottom" timestamp="1590680010979">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1866" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1590680010979" />
+    <state width="1866" height="282" key="GridCell.Tab.0.center" timestamp="1590680010979">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1866" height="282" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1590680010979" />
+    <state width="1866" height="282" key="GridCell.Tab.0.left" timestamp="1590680010978">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1866" height="282" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1590680010978" />
+    <state width="1866" height="282" key="GridCell.Tab.0.right" timestamp="1590680010979">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1866" height="282" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1590680010979" />
+    <state x="623" y="214" key="search.everywhere.popup" timestamp="1590674076003">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="623" y="214" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1590674076003" />
+  </component>
+</project>
