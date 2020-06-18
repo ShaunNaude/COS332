@@ -30,8 +30,15 @@ public class Client {
                     if(temp.charAt(j)=='>'){
                         indexE = j;
                     }
+
                 }
-                sender = temp.substring(indexS,indexE);
+                if( indexS==0 && indexE==0 ){
+                    sender = temp.substring(6,temp.length());  
+                } 
+                else{
+                    sender = temp.substring(indexS,indexE);
+                }
+                
             }
 
 
@@ -43,7 +50,7 @@ public class Client {
 
     public static String getSubject(String[] array){
         String temp = null;
-        String subject = null;
+        String subject="no subject";
         for (int i = 0 ; i < array.length;i++){
             if(array[i].startsWith("Subject")){
                 temp = array[i];
@@ -58,6 +65,7 @@ public class Client {
 
         while(true){
             POP3listener POP3client = new POP3listener(POP3_HOST,POP3_USERNAME,POP3_PASSWORD,POP3_PORT);
+            smtp smptSender = new smtp();
 
             try  {
 
@@ -95,10 +103,15 @@ public class Client {
                         String sender = getSender(messageBody);
                         if(!emails.contains(sender)){
                             System.out.println("Doesnt contain email");
+
+                            //pass sender to SMTP object
+                            smptSender.sendEmail(sender);
+
                             try {
                                 BufferedWriter out = new BufferedWriter(
                                         new FileWriter("email.txt", true));
                                 out.write(sender);
+                                out.write('\n');
                                 out.close();
                             }
                             catch (IOException e) {
